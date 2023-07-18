@@ -22,8 +22,16 @@
         application_pool: DefaultApppool
         physical_path: C:\test\packages\EmployeeProject
       register: website
-      tags: iis
-
+      tags: iis  
+    
+    - name: Add application on IIS site.
+      win_iis_webapplication:
+        name: EmployeeProject
+        site: Default Web Site
+        state: present
+        physical_path: C:\test\packages\EmployeeProject
+      tags: test
+      
     - name: create IIS site
       win_iis_website:
         name: web

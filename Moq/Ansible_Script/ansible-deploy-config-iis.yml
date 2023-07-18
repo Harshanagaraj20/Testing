@@ -1,0 +1,43 @@
+- hosts: windows
+  tasks:
+    - name: force IIS restart handler
+      win_shell: echo "Restarting IIS"
+      when: force_restart is defined and force_restart == true
+      notify:
+          - Restart IIS
+          - Restart Windows services
+
+    - name: create IIS application pool and start
+      win_iis_webapppool:
+        name: DefaultAppPool
+        state: started
+        attributes:
+          enable32BitAppOnWin64: true
+
+    - name: create IIS site
+      win_iis_website:
+        name: EmployeeProject
+        state: started
+        port: 8090
+        application_pool: DefaultApppool
+        physical_path: C:\test\packages\EmployeeProject
+      register: website
+      tags: iis
+
+    - name: create IIS site
+      win_iis_website:
+        name: web
+        state: started
+        port: 8095
+        application_pool: DefaultApppool
+        physical_path: C:\test\web
+      register: website
+      tags: iis
+
+    - name: Add application on IIS site.
+      win_iis_webapplication:
+        name: web
+        site: Default Web Site
+        state: present
+        physical_path: C:\test\web
+      tags: test

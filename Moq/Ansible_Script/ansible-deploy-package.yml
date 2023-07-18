@@ -1,0 +1,12 @@
+- hosts: windows
+  tasks:
+    - name: copy file
+      win_copy:
+        src: EmployeeProject.zip
+        dest: C:\Jenkins_package\
+        remote_src: no
+    - name: unzip file
+      win_unzip:
+        src: C:\test\EmployeeProject.zip
+        dest: C:\test
+        remote_src: yes

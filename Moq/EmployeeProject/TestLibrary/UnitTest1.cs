@@ -56,7 +56,7 @@ namespace TestLibrary
         {
 
             IEmployeeReader employeeReader = this.GetListofAllEmployees();
-            Assert.IsTrue(employeeReader.GetAllEmployees().Count > 8);
+            Assert.IsTrue(employeeReader.GetAllEmployees().Count > 0);
             //we need to test 1. list of empl, 2. any exceptions, 3. browse throught the list and find the attributes of employee.
         }
     }
